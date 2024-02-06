@@ -2,8 +2,9 @@ module API
   module V1
     module Weather
       module Hisorical
-        class AvgController < API::V1::Weather::APIController
+        class AvgsController < API::V1::Weather::APIController
           def show
+            render json: { online: "avg" }
           end
         end
       end

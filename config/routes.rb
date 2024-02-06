@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         end
 
         resource :by_time, only: %i[show]
+        resource :current, only: %i[show]
       end
     end
   end
