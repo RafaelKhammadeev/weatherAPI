@@ -1,7 +1,7 @@
 module Weather
   class API < Grape::API
 
-
+    prefix :api
     format :json
     version "v1"
 

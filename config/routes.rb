@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
-  mount Root => '/'
+  # grape
+  # mount Weather::API => '/'
 
-  namespase :api do
-    namespase :v1, defaults: { format: :json }  do
+  namespace :api do
+    namespace :v1, defaults: { format: :json }  do
       resource :health, only: %i[show]
 
 
-      namespase :weather do
-        namespase :hisorical do
+      namespace :weather do
+        namespace :hisorical do
           resource :max, only: %i[show]
           resource :min, only: %i[show]
           resource :avg, only: %i[show]

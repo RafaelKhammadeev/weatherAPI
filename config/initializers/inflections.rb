@@ -13,5 +13,4 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   # inflect.acronym "RESTful"
   inflect.acronym 'API'
-  inflect.acronym 'Weather'
 end
