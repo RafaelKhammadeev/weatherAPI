@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch('DATABASE_HOST') %>
+  username: <%= ENV.fetch('POSTGRES_USER') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD') %>
+  database: <%= ENV.fetch('POSTGRES_DB') %>
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: edstein_weather_test
+
+production:
+  <<: *default
