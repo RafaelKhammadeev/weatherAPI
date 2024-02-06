@@ -13,7 +13,7 @@ development:
 
 test:
   <<: *default
-  database: edstein_weather_test
+  database: weather_test
 
 production:
   <<: *default
