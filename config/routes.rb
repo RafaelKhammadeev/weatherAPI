@@ -4,18 +4,19 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1, defaults: { format: :json }  do
-      resource :health, only: %i[show]
+      get :status, to: "health#status"
 
-
+      scope "/weather" do
+        get :current, to: "weather#current"
+        get :by_time, to: "weather#by_time"
+      end
+      
       namespace :weather do
-        namespace :hisorical do
-          resource :max, only: %i[show]
-          resource :min, only: %i[show]
-          resource :avg, only: %i[show]
+        scope "/historical" do
+          get :max, to: "historical#max"
+          get :min, to: "historical#min"
+          get :avg, to: "historical#avg"
         end
-
-        resource :by_time, only: %i[show]
-        resource :current, only: %i[show]
       end
     end
   end
