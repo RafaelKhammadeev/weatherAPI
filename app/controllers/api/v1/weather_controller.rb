@@ -12,12 +12,6 @@ module API
       def by_time
         render json: { online: "by time" }
       end
-
-      private
-
-      def weaher_params
-        
-      end
     end
   end
 end

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1, defaults: { format: :json }  do
-      get :status, to: "health#status"
+      get :health, to: "health#status"
 
       scope "/weather" do
         get :current, to: "weather#current"
