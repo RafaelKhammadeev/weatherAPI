@@ -3,44 +3,41 @@ module API
     module Weather
       class HistoricalController < ApplicationController
         before_action :basic_response
-        
-        # подумать, где можно хранить данные, чтоб не делать много запросов
-        def max
-          response = HTTParty.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/295954?apikey=#{ENV["API_Key"]}&metric=true")
 
-          maximum_temperature = response["DailyForecasts"].first["Temperature"]["Maximum"]["Value"]
+        def max
+          maximum_temperature = session["weather"]["maximum_temperature"]
           render json: { maximum_temperature: }
         end
 
         def min
-          response = HTTParty.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/295954?apikey=#{ENV["API_Key"]}&metric=true")
-
-          minimum_temperature = response["DailyForecasts"].first["Temperature"]["Minimum"]["Value"]
+          minimum_temperature = session["weather"]["minimum_temperature"]
           render json: { minimum_temperature: }
         end
 
         def avg
-          response = HTTParty.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/295954?apikey=#{ENV["API_Key"]}&metric=true")
-
-          maximum_temperature = response["DailyForecasts"].first["Temperature"]["Maximum"]["Value"]
-          minimum_temperature = response["DailyForecasts"].first["Temperature"]["Minimum"]["Value"]
-
-          average_temperature = (maximum_temperature + minimum_temperature) / 2
+          average_temperature = session["weather"]["average_temperature"]
           render json: { average_temperature: }
         end
 
         private 
-        # Можно вынести все запросы в один метод и использовать в before action, как раз таки там можно
-        # будет сделать все проверки на куки (это тоже нужно будет подумать:D)
+
         def basic_response
+          return if session.key?("weather") && session["weather"]["synchronization_time"] > Date.today.to_s
+
           response = HTTParty.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/295954?apikey=#{ENV["API_Key"]}&metric=true")
+          
           temperature = response["DailyForecasts"].first["Temperature"]
 
           maximum_temperature = temperature["Maximum"]["Value"]
           minimum_temperature = temperature["Minimum"]["Value"]
           average_temperature = (maximum_temperature + minimum_temperature) / 2
 
-          cookies
+          session["weather"] = {
+            synchronization_time: Date.tomorrow.to_s,
+            maximum_temperature:,
+            minimum_temperature:,
+            average_temperature:
+          }
         end
       end
     end
