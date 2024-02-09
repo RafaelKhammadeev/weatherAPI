@@ -57,9 +57,8 @@ module API
         if max_index == 2
           first_diff = time - (historical.first[:time]).abs
           second_diff = time - (historical.last[:time]).abs
-          binding.pry
+
           result = first_diff > second_diff ? historical.last : historical.first
-          
           return result
         end
 
