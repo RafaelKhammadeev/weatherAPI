@@ -24,6 +24,8 @@ module API
         def basic_response
           return if session.key?("weather") && session["weather"]["synchronization_time"] > Date.today.to_s
 
+          # Нужно добавить ошибку, если количество запросов привышено
+          # Они вроде генерируются, если правильно помню
           response = HTTParty.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/295954?apikey=#{ENV["API_Key"]}&metric=true")
           
           temperature = response["DailyForecasts"].first["Temperature"]
@@ -33,7 +35,7 @@ module API
           average_temperature = (maximum_temperature + minimum_temperature) / 2
 
           session["weather"] = {
-            synchronization_time: Date.tomorrow.to_s,
+            synchronization_time: Date.tomorrow,
             maximum_temperature:,
             minimum_temperature:,
             average_temperature:

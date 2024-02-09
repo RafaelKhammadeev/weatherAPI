@@ -8,7 +8,8 @@ Rails.application.routes.draw do
 
       scope "/weather" do
         get :current, to: "weather#current"
-        get :by_time, to: "weather#by_time"
+        
+        get "/:time", to: "weather#by_time"
       end
       
       namespace :weather do
