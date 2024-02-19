@@ -19,19 +19,19 @@ module API
           render json: { average_temperature: }
         end
 
-        private 
+        private
 
         def weather_adapter
           ::Weather::Adapter.new
         end
 
         def basic_response
-          return if session.key?("weather") && session["weather"]["synchronization_time"] > Date.today.to_s
+          return if session.key?("weather") && session["weather"]["synchronization_time"] > Time.zone.today
 
           # Нужно добавить ошибку, если количество запросов привышено
           # Они вроде генерируются, если правильно помню
           response = weather_adapter.daily_forecast_by_metric
-          
+
           temperature = response["DailyForecasts"].first["Temperature"]
 
           maximum_temperature = temperature["Maximum"]["Value"]
@@ -39,7 +39,7 @@ module API
           average_temperature = (maximum_temperature + minimum_temperature) / 2
 
           session["weather"] = {
-            synchronization_time: Date.tomorrow,
+            synchronization_time: Time.zone.today,
             maximum_temperature:,
             minimum_temperature:,
             average_temperature:

@@ -1,24 +1,23 @@
-module Weather
-  class API < Grape::API
+# module Weather
+#   class API < Grape::API
+#     prefix :api
+#     format :json
+#     version "v1"
 
-    prefix :api
-    format :json
-    version "v1"
+#     base_uri 'http://dataservice.accuweather.com'
 
-    # base_uri 'http://dataservice.accuweather.com'
+#     AREA = "295954" # Kazan
 
-    # AREA = "295954" # Kazan
+#     resource :weather do
+#       get :current do
+#         response = HTTParty.get("http://dataservice.accuweather.com/currentconditions/v1/295954?apikey=HZx6OsztXRnGnnGkugN99iXj9aStELOX")
 
-    resource :weather do
-      get :current do
-        response = HTTParty.get("http://dataservice.accuweather.com/currentconditions/v1/295954?apikey=HZx6OsztXRnGnnGkugN99iXj9aStELOX")
+#         response.body
 
-        # response.body
-
-        # {
-        #   current_temperature: response['Temperature']['Metric']['Value']
-        # }
-      end
-    end
-  end
-end
+#         {
+#           current_temperature: response['Temperature']['Metric']['Value']
+#         }
+#       end
+#     end
+#   end
+# end

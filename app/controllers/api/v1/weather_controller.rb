@@ -1,15 +1,15 @@
 module API
   module V1
     class WeatherController < ApplicationController
-      before_action :get_time, only: %i[by_time]
-      before_action :get_historical, only: %i[by_time]
+      before_action :fetch_time, only: %i[by_time]
+      before_action :fetch_historical, only: %i[by_time]
 
       def current
         response = weather_adapter.fetch_current_conditions
         parsed_response = JSON.parse(response.body).first
-        
-        current_temperature = parsed_response['Temperature']['Metric']['Value'].to_s
-        render json: { current_temperature:  }
+
+        current_temperature = parsed_response["Temperature"]["Metric"]["Value"].to_s
+        render json: { current_temperature: }
       end
 
       def by_time
@@ -24,7 +24,7 @@ module API
 
       private
 
-      def get_time
+      def fetch_time
         @time = /\d{10}/.match(params[:time])
         @time = @time[0].to_i if @time
       end
@@ -33,7 +33,7 @@ module API
         ::Weather::Adapter.new
       end
 
-      def get_historical
+      def fetch_historical
         response = weather_adapter.fetch_current_conditions_historical
 
         @historical = []
@@ -59,8 +59,8 @@ module API
         mid_index = max_index / 2
 
         if max_index == 2
-          first_diff = time - (historical.first[:time]).abs
-          second_diff = time - (historical.last[:time]).abs
+          first_diff = time - historical.first[:time].abs
+          second_diff = time - historical.last[:time].abs
 
           result = first_diff > second_diff ? historical.last : historical.first
           return result

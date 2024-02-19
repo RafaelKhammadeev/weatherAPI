@@ -4,17 +4,15 @@ module Weather
     base_uri "https://dataservice.accuweather.com"
 
     def initialize
-      @apikey = ENV["API_Key"]
-      @town_id = ENV["Town_ID"]
+      @apikey = ENV.fetch("API_Key", nil)
+      @town_id = ENV.fetch("Town_ID", nil)
     end
 
     def fetch_daily_forecast(query = {})
-      binding.pry
       self.class.get("/forecasts/v1/daily/1day/#{@town_id}", query: query_prepare(query))
     end
 
     def fetch_current_conditions_historical
-      binding.pry
       self.class.get("/currentconditions/v1/#{@town_id}/historical/24", query: hashed_apikey)
     end
 
