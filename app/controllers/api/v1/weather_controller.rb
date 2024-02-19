@@ -5,7 +5,7 @@ module API
       before_action :get_historical, only: %i[by_time]
 
       def current
-        response = HTTParty.get("http://dataservice.accuweather.com/currentconditions/v1/295954?apikey=#{ENV["API_Key"]}")
+        response = weather_adapter.fetch_current_conditions
         parsed_response = JSON.parse(response.body).first
         
         current_temperature = parsed_response['Temperature']['Metric']['Value'].to_s
@@ -29,8 +29,12 @@ module API
         @time = @time[0].to_i if @time
       end
 
+      def weather_adapter
+        ::Weather::Adapter.new
+      end
+
       def get_historical
-        response = HTTParty.get("http://dataservice.accuweather.com/currentconditions/v1/295954/historical/24?apikey=#{ENV["API_Key"]}")
+        response = weather_adapter.fetch_current_conditions_historical
 
         @historical = []
         response.each do |hour_historical|

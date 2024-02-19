@@ -21,12 +21,16 @@ module API
 
         private 
 
+        def weather_adapter
+          ::Weather::Adapter.new
+        end
+
         def basic_response
           return if session.key?("weather") && session["weather"]["synchronization_time"] > Date.today.to_s
 
           # Нужно добавить ошибку, если количество запросов привышено
           # Они вроде генерируются, если правильно помню
-          response = HTTParty.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/295954?apikey=#{ENV["API_Key"]}&metric=true")
+          response = weather_adapter.daily_forecast_by_metric
           
           temperature = response["DailyForecasts"].first["Temperature"]
 
