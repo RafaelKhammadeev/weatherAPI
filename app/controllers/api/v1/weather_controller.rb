@@ -32,7 +32,8 @@ module API
       def weather_adapter
         ::Weather::Adapter.new
       end
-
+      
+      # Эту штуку можно вынести в адаптер
       def fetch_historical
         response = weather_adapter.fetch_current_conditions_historical
 
@@ -54,6 +55,7 @@ module API
         !(upper_limit < time || lower_limit > time)
       end
 
+      # метод вернет либо call либо all
       def near_time(time, historical)
         max_index = historical.size
         mid_index = max_index / 2

@@ -12,6 +12,7 @@ gem "jbuilder", "~> 2.7"
 gem "pg"
 gem "sass-rails", ">= 6"
 gem "turbolinks", "~> 5"
+gem "interactor"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
@@ -23,6 +24,8 @@ group :development, :test do
   gem "rubocop-rails", require: false
   gem "rubocop-rake", require: false
   gem "rubocop-thread_safety", require: false
+  gem "rspec-rails"
+  gem "webmock"
 end
 
 group :development do

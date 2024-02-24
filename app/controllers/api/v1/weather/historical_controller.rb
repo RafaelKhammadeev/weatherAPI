@@ -30,7 +30,7 @@ module API
 
           # Нужно добавить ошибку, если количество запросов привышено
           # Они вроде генерируются, если правильно помню
-          response = weather_adapter.daily_forecast_by_metric
+          response = weather_adapter.fetch_daily_forecast_by_metric
 
           temperature = response["DailyForecasts"].first["Temperature"]
 

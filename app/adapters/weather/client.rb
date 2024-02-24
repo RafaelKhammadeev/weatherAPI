@@ -4,8 +4,8 @@ module Weather
     base_uri "https://dataservice.accuweather.com"
 
     def initialize
-      @apikey = ENV.fetch("API_Key", nil)
-      @town_id = ENV.fetch("Town_ID", nil)
+      @apikey = ENV.fetch("API_Key")
+      @town_id = ENV.fetch("Town_ID")
     end
 
     def fetch_daily_forecast(query = {})
