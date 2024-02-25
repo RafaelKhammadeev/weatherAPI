@@ -11,7 +11,7 @@ module API
 
       def by_time
         historical = weather_adapter.fetch_historical
-        weather_time_analyzer = ::Weather::TimeAnalyzer.new(fetch_time, historical)
+        weather_time_analyzer = ::Weather::AnalyzeTime.new(fetch_time, historical)
 
         if weather_time_analyzer.valid_time?
           near_measure = weather_time_analyzer.find_near_time
@@ -30,7 +30,7 @@ module API
 
       def fetch_time
         time = /\d{10}/.match(params[:time])
-        time = time[0].to_i if time
+        time[0].to_i if time
       end
     end
   end

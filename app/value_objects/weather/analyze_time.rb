@@ -1,5 +1,5 @@
 module Weather
-  class TimeAnalyzer
+  class AnalyzeTime
     def initialize(time, forecast_by_hour)
       @time = time
       @forecast_by_hour = forecast_by_hour

@@ -5,17 +5,17 @@ module API
         before_action :basic_response
 
         def max
-          maximum_temperature = session["weather"]["maximum_temperature"]
+          maximum_temperature = session[:weather][:max_temp]
           render json: { maximum_temperature: }
         end
 
         def min
-          minimum_temperature = session["weather"]["minimum_temperature"]
+          minimum_temperature = session[:weather][:min_temp]
           render json: { minimum_temperature: }
         end
 
         def avg
-          average_temperature = session["weather"]["average_temperature"]
+          average_temperature = session[:weather][:avg_temp]
           render json: { average_temperature: }
         end
 
@@ -26,23 +26,19 @@ module API
         end
 
         def basic_response
-          return if session.key?("weather") && session["weather"]["synchronization_time"] > Time.zone.today
+          return if session.key?("weather") && session["weather"]["sync_time"] > Time.zone.today.to_s
 
           # Нужно добавить ошибку, если количество запросов привышено
           # Они вроде генерируются, если правильно помню
-          response = weather_adapter.fetch_daily_forecast_by_metric
-
-          temperature = response["DailyForecasts"].first["Temperature"]
-
-          maximum_temperature = temperature["Maximum"]["Value"]
-          minimum_temperature = temperature["Minimum"]["Value"]
-          average_temperature = (maximum_temperature + minimum_temperature) / 2
+          response = weather_adapter.fetch_historical
+          temperatures = response.pluck(:temperature)
+          # по идее можно делать проверку если прошел час, то обновлять данные в куки:D
 
           session["weather"] = {
-            synchronization_time: Time.zone.today,
-            maximum_temperature:,
-            minimum_temperature:,
-            average_temperature:
+            sync_time: Time.zone.today,
+            max_temp: temperatures.max,
+            min_temp: temperatures.min,
+            avg_temp: (temperatures.sum / temperatures.size).round(2)
           }
         end
       end
