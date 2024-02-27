@@ -1,29 +1,38 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
-gem 'rails', '~> 6.1.7', '>= 6.1.7.6'
-gem 'puma', '~> 5.0'
+ruby "3.1.2"
+gem "puma", "~> 5.0"
+gem "rails", "~> 6.1.7", ">= 6.1.7.6"
 
-gem 'pg'
-gem 'sass-rails', '>= 6'
-gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.7'
-gem 'bootsnap', '>= 1.4.4', require: false
-gem 'grape'
-gem 'httparty'
+gem "bootsnap", ">= 1.4.4", require: false
+gem "grape"
+gem "httparty"
+gem "interactor"
+gem "jbuilder", "~> 2.7"
+gem "pg"
+gem "sass-rails", ">= 6"
+gem "turbolinks", "~> 5"
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'pry'
+  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "dotenv-rails"
+  gem "pry"
+  gem "rspec-rails"
+  gem "rubocop", require: false
+  gem "rubocop-i18n", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-rake", require: false
+  gem "rubocop-thread_safety", require: false
+  gem "webmock"
 end
 
 group :development do
-  gem 'web-console', '>= 4.1.0'
-  gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
-  gem 'spring'
-  gem 'dotenv-rails'
+  gem "listen", "~> 3.3"
+  gem "rack-mini-profiler", "~> 2.0"
+  gem "spring"
+  gem "web-console", ">= 4.1.0"
 end
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]

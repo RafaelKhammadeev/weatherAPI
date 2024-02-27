@@ -1,0 +1,40 @@
+require:
+  - rubocop-rails
+  - rubocop-i18n
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-thread_safety
+
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  Exclude:
+    - db/**/*
+    - bin/**/*
+    - tmp/**/*
+    - vendor/**/*
+
+I18n/GetText/DecorateString:
+  Enabled: false
+
+I18n/RailsI18n/DecorateString:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - config/**/*
+
+Metrics/MethodLength:
+  Max: 15
+
+Layout/FirstArgumentIndentation:
+  Enabled: false
